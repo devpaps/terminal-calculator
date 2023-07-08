@@ -52,7 +52,7 @@ fn validate_menu(menu_alternatives: &str) -> Operation {
     loop {
         let mut numbers = String::new();
 
-        println!("{}", menu_alternatives);
+        println!("\n{}", menu_alternatives);
 
         println!("1. Add");
         println!("2. Subtract");
@@ -64,10 +64,22 @@ fn validate_menu(menu_alternatives: &str) -> Operation {
             .expect("Failed to read line");
 
         match numbers.trim().parse() {
-            Ok(1) => return Operation::Add,
-            Ok(2) => return Operation::Subtract,
-            Ok(3) => return Operation::Multiply,
-            Ok(4) => return Operation::Divide,
+            Ok(1) => {
+                println!("\nYou chose to add!\n");
+                return Operation::Add;
+            }
+            Ok(2) => {
+                println!("\nYou chose to subtract!\n");
+                return Operation::Subtract;
+            }
+            Ok(3) => {
+                println!("\nYou chose to multiply!\n");
+                return Operation::Multiply;
+            }
+            Ok(4) => {
+                println!("\nYou chose to divide!\n");
+                return Operation::Divide;
+            }
             Ok(_) => {
                 println!("Please type a number between {} and {}!", MIN, MAX);
             }
@@ -79,11 +91,11 @@ fn validate_menu(menu_alternatives: &str) -> Operation {
 }
 
 fn main() {
-    println!("What do you want to calculate?");
+    println!("\nWhat do you want to calculate?");
 
     let operation = validate_menu("Choose a number");
-    let num_one = validate_number("Enter number 1");
-    let num_two = validate_number("Enter number 2");
+    let num_one = validate_number("Enter first number");
+    let num_two = validate_number("Enter second number");
 
     let numbers = Numbers { num_one, num_two };
 
@@ -114,7 +126,7 @@ fn main() {
         }
         Operation::Divide => {
             println!(
-                "The product of {} / {} is {}",
+                "\nThe product of {} / {} is {}",
                 numbers.num_one,
                 numbers.num_two,
                 numbers.kvot()
