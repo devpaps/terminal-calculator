@@ -1,8 +1,8 @@
 use std::io;
 
 struct Numbers {
-    num_one: i32,
-    num_two: i32,
+    num_one: f64,
+    num_two: f64,
 }
 
 enum Operation {
@@ -13,21 +13,21 @@ enum Operation {
 }
 
 impl Numbers {
-    fn sum(&self) -> i32 {
+    fn sum(&self) -> f64 {
         self.num_one + self.num_two
     }
-    fn sub(&self) -> i32 {
+    fn sub(&self) -> f64 {
         self.num_one - self.num_two
     }
-    fn product(&self) -> i32 {
+    fn product(&self) -> f64 {
         self.num_one * self.num_two
     }
-    fn kvot(&self) -> i32 {
+    fn kvot(&self) -> f64 {
         self.num_one / self.num_two
     }
 }
 
-fn validate_number(prompt: &str) -> i32 {
+fn validate_number(prompt: &str) -> f64 {
     loop {
         let mut num = String::new();
 
