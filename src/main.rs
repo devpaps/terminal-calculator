@@ -23,6 +23,10 @@ impl Numbers {
         self.num_one * self.num_two
     }
     fn kvot(&self) -> f64 {
+        if self.num_two == 0.0 {
+            println!("\nYou can't divide by zero!");
+            return 0.0;
+        }
         self.num_one / self.num_two
     }
 }
@@ -110,7 +114,7 @@ fn main() {
         }
         Operation::Subtract => {
             println!(
-                "The product of {} - {} is {}",
+                "The differens of {} - {} is {}",
                 numbers.num_one,
                 numbers.num_two,
                 numbers.sub()
@@ -126,7 +130,7 @@ fn main() {
         }
         Operation::Divide => {
             println!(
-                "\nThe product of {} / {} is {}",
+                "\nThe kvot of {} / {} is {}",
                 numbers.num_one,
                 numbers.num_two,
                 numbers.kvot()
