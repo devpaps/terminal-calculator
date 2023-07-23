@@ -12,7 +12,14 @@ enum Operation {
     Divide,
 }
 
-impl Numbers {
+trait Arithmetic {
+    fn sum(&self) -> f64;
+    fn sub(&self) -> f64;
+    fn product(&self) -> f64;
+    fn kvot(&self) -> f64;
+}
+
+impl Arithmetic for Numbers {
     fn sum(&self) -> f64 {
         self.num_one + self.num_two
     }
@@ -95,9 +102,10 @@ fn validate_menu(menu_alternatives: &str) -> Operation {
 }
 
 fn main() {
-    println!("\nWhat do you want to calculate?");
+    static WELCOME: &str = "\nWelcome to the calculator 🚀!";
+    println!("{}", WELCOME);
 
-    let operation = validate_menu("Choose a number");
+    let operation = validate_menu("Choose an operation:");
     let num_one = validate_number("Enter first number");
     let num_two = validate_number("Enter second number");
 
