@@ -102,8 +102,7 @@ fn validate_menu(menu_alternatives: &str) -> Operation {
 }
 
 fn main() {
-    static WELCOME: &str = "\nWelcome to the calculator 🚀!";
-    println!("{}", WELCOME);
+    println!("{}", "\nWelcome to the calculator 🚀!");
 
     let operation = validate_menu("Choose an operation:");
     let num_one = validate_number("Enter first number");
