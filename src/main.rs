@@ -136,7 +136,7 @@ fn validate_menu(menu_alternatives: &str) -> Operation {
 }
 
 fn main() {
-    println!("{}", "\nWelcome to the calculator 🚀!");
+    println!("\nWelcome to the calculator 🚀!");
 
     let mut history = History {
         operations: Vec::new(),
