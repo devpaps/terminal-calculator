@@ -21,11 +21,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 Once the binary is running:
 
-  Choose the operation you want to perform by typing a number between 1 and 4:
+  Choose the operation you want to perform by typing a number between 1 and 5:
 1. Addition
 2. Subtraction
 3. Multiplication
 4. Division
+5. Exit
 
 - Enter the first number.
 - Enter the second number.
