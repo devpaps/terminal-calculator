@@ -30,7 +30,7 @@ Once the binary is running:
 - Enter the first number.
 - Enter the second number.
 
-The calculator will then perform the chosen operation on the two inputted numbers and print out the result.
+The calculator will then perform the chosen operation on the two inputted numbers and print out the result. It will also print the every calculation. 
 
 #### Contributing
 
