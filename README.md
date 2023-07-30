@@ -9,8 +9,6 @@ These instructions will get you a copy of the project up and running on your loc
 
 [Rust](https://www.rust-lang.org/tools/install)
   
-[Cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) (comes with Rust)
-
 #### Run
 - Clone the repository to your local machine
 - Type `cargo` to install dependecies
