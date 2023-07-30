@@ -1,12 +1,14 @@
 use std::io;
 
-struct Numbers {
+pub mod tests;
+
+pub struct Numbers {
     num_one: f64,
     num_two: f64,
 }
 
 #[derive(Debug)]
-struct History {
+pub struct History {
     operations: Vec<String>,
 }
 
@@ -17,12 +19,12 @@ enum Operation {
     Divide,
 }
 
-trait HistoryTrait {
+pub trait HistoryTrait {
     fn add_history(&mut self, operation: String);
     fn print_history(&self);
 }
 
-trait Arithmetic {
+pub trait Arithmetic {
     fn sum(&mut self, history: &mut History) -> f64;
     fn sub(&mut self, history: &mut History) -> f64;
     fn product(&mut self, history: &mut History) -> f64;
