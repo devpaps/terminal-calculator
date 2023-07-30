@@ -5,6 +5,11 @@ struct Numbers {
     num_two: f64,
 }
 
+#[derive(Debug)]
+struct History {
+    operations: Vec<String>,
+}
+
 enum Operation {
     Add,
     Subtract,
@@ -12,29 +17,53 @@ enum Operation {
     Divide,
 }
 
+trait HistoryTrait {
+    fn add_history(&mut self, operation: String);
+    fn print_history(&self);
+}
+
 trait Arithmetic {
-    fn sum(&self) -> f64;
-    fn sub(&self) -> f64;
-    fn product(&self) -> f64;
-    fn kvot(&self) -> f64;
+    fn sum(&mut self, history: &mut History) -> f64;
+    fn sub(&mut self, history: &mut History) -> f64;
+    fn product(&mut self, history: &mut History) -> f64;
+    fn kvot(&mut self, history: &mut History) -> f64;
+}
+
+impl HistoryTrait for History {
+    fn add_history(&mut self, operation: String) {
+        self.operations.push(operation);
+    }
+    fn print_history(&self) {
+        for operation in &self.operations {
+            println!("{}", operation);
+        }
+    }
 }
 
 impl Arithmetic for Numbers {
-    fn sum(&self) -> f64 {
-        self.num_one + self.num_two
+    fn sum(&mut self, history: &mut History) -> f64 {
+        let result = self.num_one + self.num_two;
+        history.add_history(format!("{} + {} = {}", self.num_one, self.num_two, result));
+        result
     }
-    fn sub(&self) -> f64 {
-        self.num_one - self.num_two
+    fn sub(&mut self, history: &mut History) -> f64 {
+        let result = self.num_one - self.num_two;
+        history.add_history(format!("{} - {} = {}", self.num_one, self.num_two, result));
+        result
     }
-    fn product(&self) -> f64 {
-        self.num_one * self.num_two
+    fn product(&mut self, history: &mut History) -> f64 {
+        let result = self.num_one * self.num_two;
+        history.add_history(format!("{} * {} = {}", self.num_one, self.num_two, result));
+        result
     }
-    fn kvot(&self) -> f64 {
+    fn kvot(&mut self, history: &mut History) -> f64 {
         if self.num_two == 0.0 {
             println!("\nYou can't divide by zero!");
             return 0.0;
         }
-        self.num_one / self.num_two
+        let result = self.num_one / self.num_two;
+        history.add_history(format!("{} / {} = {}", self.num_one, self.num_two, result));
+        result
     }
 }
 
@@ -69,6 +98,7 @@ fn validate_menu(menu_alternatives: &str) -> Operation {
         println!("2. Subtract");
         println!("3. Multiply");
         println!("4. Divide");
+        println!("5. Exit");
 
         io::stdin()
             .read_line(&mut numbers)
@@ -91,6 +121,10 @@ fn validate_menu(menu_alternatives: &str) -> Operation {
                 println!("\nYou chose to divide!\n");
                 return Operation::Divide;
             }
+            Ok(5) => {
+                println!("\nBye bye!");
+                std::process::exit(0);
+            }
             Ok(_) => {
                 println!("Please type a number between {} and {}!", MIN, MAX);
             }
@@ -104,44 +138,48 @@ fn validate_menu(menu_alternatives: &str) -> Operation {
 fn main() {
     println!("{}", "\nWelcome to the calculator 🚀!");
 
-    let operation = validate_menu("Choose an operation:");
-    let num_one = validate_number("Enter first number");
-    let num_two = validate_number("Enter second number");
+    let mut history = History {
+        operations: Vec::new(),
+    };
 
-    let numbers = Numbers { num_one, num_two };
+    loop {
+        let operation = validate_menu("Choose an operation:");
+        let num_one = validate_number("Enter first number");
+        let num_two = validate_number("Enter second number");
 
-    match operation {
-        Operation::Add => {
-            println!(
-                "The sum of {} + {} is {}",
-                numbers.num_one,
-                numbers.num_two,
-                numbers.sum()
-            );
+        let mut numbers = Numbers { num_one, num_two };
+
+        match operation {
+            Operation::Add => {
+                let result = numbers.sum(&mut history);
+                println!(
+                    "The sum of {} + {} is {}",
+                    numbers.num_one, numbers.num_two, result
+                );
+            }
+            Operation::Subtract => {
+                let result = numbers.sub(&mut history);
+                println!(
+                    "The difference of {} - {} is {}",
+                    numbers.num_one, numbers.num_two, result
+                );
+            }
+            Operation::Multiply => {
+                let result = numbers.product(&mut history);
+                println!(
+                    "The product of {} * {} is {}",
+                    numbers.num_one, numbers.num_two, result
+                );
+            }
+            Operation::Divide => {
+                let result = numbers.kvot(&mut history);
+                println!(
+                    "The quotient of {} / {} is {}",
+                    numbers.num_one, numbers.num_two, result
+                );
+            }
         }
-        Operation::Subtract => {
-            println!(
-                "The differens of {} - {} is {}",
-                numbers.num_one,
-                numbers.num_two,
-                numbers.sub()
-            );
-        }
-        Operation::Multiply => {
-            println!(
-                "The product of {} * {} is {}",
-                numbers.num_one,
-                numbers.num_two,
-                numbers.product()
-            );
-        }
-        Operation::Divide => {
-            println!(
-                "\nThe kvot of {} / {} is {}",
-                numbers.num_one,
-                numbers.num_two,
-                numbers.kvot()
-            );
-        }
+        println!("\nOperation history:");
+        history.print_history();
     }
 }
